@@ -87,10 +87,6 @@ d3.json("data/data.json").then(function(data) {
     .filter(requisite => requisite.course_number == course.course_number) 
     .attr("fill", "blue")  
     .attr("stroke", "black"); 
-
-
-
-
     // first find all the course numbers of prerequisites
     // put those prereq numbers in an array
     // filter those prerequ numbers to be in part of the courses (filter courses with those prereq numbers)
@@ -99,23 +95,32 @@ d3.json("data/data.json").then(function(data) {
 
     courseNodes.selectAll("circle")
     .filter(requisite => prereq_course_numbers.includes(requisite.course_number)) 
-    .attr("fill", "red")  
+    .attr("fill", "rgba(129, 247, 255, 0.7)")  
 
-
-
-
-
-
-    
     courseNumbers.selectAll("text")
     .filter(requisite => requisite.course_number == course.course_number)  
     .attr("fill", "white");  
+
+    // grey out the ones that are not part of the prereq or course
+    courseNodes.selectAll("circle")
+    .filter(requisite => !prereq_course_numbers.includes(requisite.course_number) && requisite.course_number != course.course_number) 
+    .attr("fill", "grey")  
+    .style("opacity", "0.05");  
+
+    requisiteLines.selectAll("lines")
+    .filter(requisite => !prereq_course_numbers.includes(requisite.course_number) && requisite.course_number != course.course_number) 
+    .style("opacity", "0.05");  
 
 
   
   };
 
   function hideCourseInfo (event, course) {
+    courseNodes.selectAll("circle")
+    .filter(requisite => !prereq_course_numbers.includes(requisite.course_number) && requisite.course_number != course.course_number) 
+    .attr("fill", "white") 
+    .style("opacity", "1");   
+
     requisiteLines.selectAll("line")
         .filter(requisite => requisite.course_number == course.course_number)
         .attr("opacity", requisite => requisite.requisite_is_primary == 1 ? 0.2 : 0);
@@ -129,7 +134,29 @@ d3.json("data/data.json").then(function(data) {
     courseNumbers.selectAll("text")
         .filter(requisite => requisite.course_number == course.course_number)  
         .attr("fill", "black"); 
-};
+    
+    courseNodes.selectAll("circle")
+        .filter(requisite => prereq_course_numbers.includes(requisite.course_number)) 
+        .attr("fill", "white")        
+        .style("opacity", "1");   
+      
+      
+      
+    requisiteLines.selectAll("lines")
+    .filter(requisite => !prereq_course_numbers.includes(requisite.course_number) && requisite.course_number != course.course_number) 
+    .style("opacity", "1");  
+  
+  
+  }
+
+
+
+
+    
+
+
+  
+
 
   function renderProgram (program,courseList,duration) {
     var course0 = {"number": "",
