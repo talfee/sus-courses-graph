@@ -88,10 +88,20 @@ d3.json("data/data.json").then(function(data) {
     .attr("fill", "blue")  
     .attr("stroke", "black"); 
 
-//     courseNodes.selectAll("circle")
-//         .filter(requisite => )
-//         .attr("fill", "rgba(19, 210, 244, 0.666)"); 
-// }
+
+
+
+    // first find all the course numbers of prerequisites
+    // put those prereq numbers in an array
+    // filter those prerequ numbers to be in part of the courses (filter courses with those prereq numbers)
+    // change the color of those targeted prerequisites 
+    prereq_course_numbers = data.courses_requisites.filter(req => req.course_number == course.course_number).map(req => req.requisite_number)
+
+    courseNodes.selectAll("circle")
+    .filter(requisite => prereq_course_numbers.includes(requisite.course_number)) 
+    .attr("fill", "red")  
+
+
 
 
 
