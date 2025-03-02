@@ -82,14 +82,44 @@ d3.json("data/data.json").then(function(data) {
                             "notes": courseInfo.notes};
     courseInfoDiv.html(courseInfoTemplate(courseInfoObject));
     requisiteLines.selectAll("line").filter(requisite => requisite.course_number == course.course_number).attr("opacity",1);
+
+    courseNodes.selectAll("circle")
+    .filter(requisite => requisite.course_number == course.course_number) 
+    .attr("fill", "blue")  
+    .attr("stroke", "black"); 
+
+//     courseNodes.selectAll("circle")
+//         .filter(requisite => )
+//         .attr("fill", "rgba(19, 210, 244, 0.666)"); 
+// }
+
+
+
+
+    
+    courseNumbers.selectAll("text")
+    .filter(requisite => requisite.course_number == course.course_number)  
+    .attr("fill", "white");  
+
+
+  
   };
 
-  function hideCourseInfo (event,course) {
-    requisiteLines
-      .selectAll("line")
-      .filter(requisite => requisite.course_number == course.course_number)
-      .attr("opacity",requisite => requisite.requisite_is_primary == 1 ? 0.2 : 0);
-  };
+  function hideCourseInfo (event, course) {
+    requisiteLines.selectAll("line")
+        .filter(requisite => requisite.course_number == course.course_number)
+        .attr("opacity", requisite => requisite.requisite_is_primary == 1 ? 0.2 : 0);
+
+    courseNodes.selectAll("circle")
+        .filter(requisite => requisite.course_number == course.course_number)
+        .attr("fill", "white") 
+        .attr("stroke", "black") 
+        .attr("opacity", 1); 
+
+    courseNumbers.selectAll("text")
+        .filter(requisite => requisite.course_number == course.course_number)  
+        .attr("fill", "black"); 
+};
 
   function renderProgram (program,courseList,duration) {
     var course0 = {"number": "",
