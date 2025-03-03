@@ -80,18 +80,26 @@ d3.json("data/data.json").then(function(data) {
                             "prereqs": requisiteInfo.filter(requisite => requisite.type == "pre"),
                             "coreqs": requisiteInfo.filter(requisite => requisite.type == "co"),
                             "notes": courseInfo.notes};
+                            
     courseInfoDiv.html(courseInfoTemplate(courseInfoObject));
+
+    prereq_course_numbers = data.courses_requisites.filter(req => req.course_number == course.course_number).map(req => req.requisite_number)
+
     requisiteLines.selectAll("line").filter(requisite => requisite.course_number == course.course_number).attr("opacity",1);
+
+    //this one 
+    requisiteLines.selectAll("line").filter(requisite => requisite.course_number != course.course_number) .attr("opacity", requisite => requisite.requisite_is_primary == 1 ? 0.05 : 0).attr("stroke", "grey");
 
     courseNodes.selectAll("circle")
     .filter(requisite => requisite.course_number == course.course_number) 
     .attr("fill", "blue")  
     .attr("stroke", "black"); 
+
+
     // first find all the course numbers of prerequisites
     // put those prereq numbers in an array
     // filter those prerequ numbers to be in part of the courses (filter courses with those prereq numbers)
     // change the color of those targeted prerequisites 
-    prereq_course_numbers = data.courses_requisites.filter(req => req.course_number == course.course_number).map(req => req.requisite_number)
 
     courseNodes.selectAll("circle")
     .filter(requisite => prereq_course_numbers.includes(requisite.course_number)) 
@@ -107,9 +115,12 @@ d3.json("data/data.json").then(function(data) {
     .attr("fill", "grey")  
     .style("opacity", "0.05");  
 
-    requisiteLines.selectAll("lines")
+    courseNumbers.selectAll("text")
     .filter(requisite => !prereq_course_numbers.includes(requisite.course_number) && requisite.course_number != course.course_number) 
+    .attr("fill", "grey")
     .style("opacity", "0.05");  
+
+    
 
 
   
@@ -121,9 +132,23 @@ d3.json("data/data.json").then(function(data) {
     .attr("fill", "white") 
     .style("opacity", "1");   
 
+
+
+
+    courseNumbers.selectAll("text")
+    .filter(requisite => !prereq_course_numbers.includes(requisite.course_number) && requisite.course_number != course.course_number) 
+    .attr("fill", "black")
+    .style("opacity", "1");  
+
+
+    requisiteLines.selectAll("line").filter(requisite => requisite.course_number != course.course_number) .attr("opacity", requisite => requisite.requisite_is_primary == 1 ? 0.2 : 0).attr("stroke", "black");
+
     requisiteLines.selectAll("line")
         .filter(requisite => requisite.course_number == course.course_number)
         .attr("opacity", requisite => requisite.requisite_is_primary == 1 ? 0.2 : 0);
+
+
+
 
     courseNodes.selectAll("circle")
         .filter(requisite => requisite.course_number == course.course_number)
