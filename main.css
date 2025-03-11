@@ -78,6 +78,15 @@ h3, h4 {
   border-radius: 2px;
 }
 
+/* #program-select {
+  padding-left: 25%; 
+  padding-right: 25%;
+  padding-top: 5%; 
+  padding-bottom: 5%;
+
+} */
+
+
 #program-track-nav div.track {
   margin-left: 12px;
 }
