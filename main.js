@@ -44,16 +44,23 @@ d3.json("data/data.json").then(function(data) {
     programInfoMoreDiv.style("z-index","-1");
   });
 
-
+  var programSearch = d3.select("#program-search");
   var programSelect = d3.select("#program-select");
+
   
+
+
+function populateProgramDropdown(input, is_filter) {
+
+  programSelect.selectAll("option").remove();
   // Populate the programs dropdown
   programs.forEach(function(program) {
     programSelect.append("option")
       .attr("value", program.program_id)
       .attr("is_program", true)
       .text(program.name);
-    tracks.filter(d => d.program_id == program.program_id).forEach(function(track) {
+
+      tracks.filter(d => d.program_id == program.program_id).forEach(function(track) {
       programSelect.append("option")
         .attr("value", track.track_id)  
         .attr("is_program", false)
@@ -61,6 +68,28 @@ d3.json("data/data.json").then(function(data) {
         .text("  - " + track.name); 
   });
   });
+
+  if (is_filter && input) {
+    programSelect.selectAll("option").each(function() {
+      var optionText = d3.select(this).text().toLowerCase();
+      if (!optionText.includes(input.toLowerCase())) {
+        d3.select(this).style("display", "none");  
+      } else {
+        d3.select(this).style("display", "block");  
+      }
+    });
+  }
+}
+
+
+populateProgramDropdown("", false);
+
+// Event listener for filtering programs based on the search input
+programSearch.on("input", function() {
+  var searchText = programSearch.property("value").toLowerCase();
+  populateProgramDropdown(searchText, true);
+});
+
   
   // Event listener for program selection
   programSelect.on("change", function(event) {
