@@ -51,26 +51,56 @@ d3.json("data/data.json").then(function(data) {
   programs.forEach(function(program) {
     programSelect.append("option")
       .attr("value", program.program_id)
+      .attr("is_program", true)
       .text(program.name);
+    tracks.filter(d => d.program_id == program.program_id).forEach(function(track) {
+      programSelect.append("option")
+        .attr("value", track.track_id)  
+        .attr("is_program", false)
+        .attr("my_program", program.program_id)
+        .text("  - " + track.name); 
+  });
   });
   
   // Event listener for program selection
   programSelect.on("change", function(event) {
+    var isProgram = d3.select(this.options[this.selectedIndex]).attr("is_program") === "true";
+
+    if (isProgram){
+
     var selectedProgramId = this.value;
     var selectedProgram = programs.find(program => program.program_id == selectedProgramId);
-  
     // Highlight the selected program and update details
     renderProgram(selectedProgram, [], 600);
     programInfo1Div.html(programInfo1Template(selectedProgram));
   
     // Find a random reflection for the selected program
     var reflection = _.sample(reflections.filter(reflection => reflection.program_id == selectedProgram.program_id));
-  
-    // Update the program info templates
     programInfo2Div.html(programInfo2Template(reflection));
     programInfo1MoreDiv.html(programInfo1MoreTemplate(selectedProgram));
     programInfo2MoreDiv.html(programInfo2MoreTemplate(reflection));
-  });
+
+    } else {
+      var selectedTrackID = this.value;
+      var selectedTrack = tracks.find(track => track.track_id == selectedTrackID);
+
+      var coursesTrack = coursesTracks.filter(d => d.track_id == selectedTrackID).map(d => d.course_number);
+      var programId = d3.select(this.options[this.selectedIndex]).attr("my_program");
+      var my_program = programs.find(program => program.program_id == programId);
+
+      renderProgram(my_program,coursesTrack,600);
+
+      programInfo1Div.html(programInfo1Template(selectedTrack));
+      var reflection = _.sample(reflections.filter(reflection => reflection.track_id == selectedProgramId));
+
+      programInfo2Div.html(programInfo2Template(reflection));
+      programInfo1MoreDiv.html(programInfo1MoreTemplate(selectedTrack));
+      programInfo2MoreDiv.html(programInfo2MoreTemplate(reflection));
+
+
+
+  }}
+  );
   
 
   
@@ -119,7 +149,7 @@ d3.json("data/data.json").then(function(data) {
     // list of requisite numbers 
     prereq_course_numbers = data.courses_requisites.filter(req => req.course_number == course.course_number).map(req => req.requisite_number); 
     // prereq_course_numbers = requisites.filter(req => prereq_course_numbers.includes(req.course_number) && req.type == "pre").map(req => req.course_number); ; 
-    console.log(prereq_course_numbers); 
+    // console.log(prereq_course_numbers); 
 
     
     requisiteLines.selectAll("line").filter(requisite => requisite.course_number == course.course_number).attr("opacity",1);
