@@ -34,6 +34,34 @@ d3.json("data/data.json").then(function(data) {
   var courseInfoDiv = d3.select("#course-info");
   var courseInfoTemplate = _.template(d3.select("#course-info-template").html());
   
+
+  // Pop up logic
+
+  // Show the popup when the page loads
+  window.onload = function() {
+    console.log('Page is loaded');
+    var popup = document.getElementById("popup");
+    popup.style.display = "block";
+  }
+  // Get the <span> element that closes the popup
+  var closePopup = document.getElementById("close-popup");
+
+  // When the user clicks on the close button, close the popup
+  closePopup.onclick = function() {
+    var popup = document.getElementById("popup");
+    popup.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside the popup, close it
+  window.onclick = function(event) {
+    var popup = document.getElementById("popup");
+    if (event.target == popup) {
+      popup.style.display = "none";
+    }
+  }
+
+
+
   d3.select("#show-more").on("click",function (event) {
     programInfoDiv.style("z-index","-1");
     programInfoMoreDiv.style("z-index","1");
@@ -44,11 +72,11 @@ d3.json("data/data.json").then(function(data) {
     programInfoMoreDiv.style("z-index","-1");
   });
 
+
   var programSearch = d3.select("#program-search");
   var programSelect = d3.select("#program-select");
 
   
-
 
 function populateProgramDropdown(input, is_filter) {
 
@@ -419,3 +447,4 @@ programSearch.on("input", function() {
   programInfo2MoreDiv.html(programInfo2MoreTemplate(reflection));  
   d3.select("#program-track-nav div:nth-child(1)").classed("highlight",true);
 });
+
