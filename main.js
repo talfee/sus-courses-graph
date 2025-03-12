@@ -104,7 +104,7 @@ programSearch.on("input", function() {
     programInfo1Div.html(programInfo1Template(selectedProgram));
   
     // Find a random reflection for the selected program
-    var reflection = _.sample(reflections.filter(reflection => reflection.program_id == selectedProgram.program_id));
+    var reflection = _.sample(reflections.filter(reflection => reflection.program_id == selectedProgramId));
     programInfo2Div.html(programInfo2Template(reflection));
     programInfo1MoreDiv.html(programInfo1MoreTemplate(selectedProgram));
     programInfo2MoreDiv.html(programInfo2MoreTemplate(reflection));
@@ -120,7 +120,7 @@ programSearch.on("input", function() {
       renderProgram(my_program,coursesTrack,600);
 
       programInfo1Div.html(programInfo1Template(selectedTrack));
-      var reflection = _.sample(reflections.filter(reflection => reflection.track_id == selectedProgramId));
+      var reflection = _.sample(reflections.filter(reflection => reflection.track_id == selectedTrackID));
 
       programInfo2Div.html(programInfo2Template(reflection));
       programInfo1MoreDiv.html(programInfo1MoreTemplate(selectedTrack));
