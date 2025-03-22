@@ -1,0 +1,172 @@
+{
+    "courses1": [
+        {
+            "number": 103,
+            "credits": 3,
+            "title": "cpsc 103"
+        },
+        {
+            "number": 107,
+            "credits": 3,
+            "title": "cpsc 107"
+        },
+        {
+            "number": 110,
+            "credits": 3,
+            "title": "cpsc 110"
+        },
+        {
+            "number": 121,
+            "credits": 3,
+            "title": "cpsc 121"
+        },
+        {
+            "number": 210,
+            "credits": 3,
+            "title": "cpsc 210"
+        },
+        {
+            "number": 213,
+            "credits": 3,
+            "title": "cpsc 213"
+        },
+        {
+            "number": 221,
+            "credits": 3,
+            "title": "cpsc 221"
+        },
+        {
+            "number": 310,
+            "credits": 3,
+            "title": "cpsc 310"
+        },
+        {
+            "number": 313,
+            "credits": 3,
+            "title": "cpsc 313"
+        },
+        {
+            "number": 320,
+            "credits": 3,
+            "title": "cpsc 320"
+        }
+    ],
+    "requisites1": [
+        {
+            "requisite_id": 1,
+            "course_number": 107,
+            "type": "pre",
+            "description": ""
+        },
+        {
+            "requisite_id": 2,
+            "course_number": 210,
+            "type": "pre",
+            "description": ""
+        },
+        {
+            "requisite_id": 3,
+            "course_number": 213,
+            "type": "pre",
+            "description": ""
+        },
+        {
+            "requisite_id": 4,
+            "course_number": 221,
+            "type": "pre",
+            "description": ""
+        },
+        {
+            "requisite_id": 5,
+            "course_number": 310,
+            "type": "pre",
+            "description": ""
+        },
+        {
+            "requisite_id": 6,
+            "course_number": 313,
+            "type": "pre",
+            "description": ""
+        },
+        {
+            "requisite_id": 7,
+            "course_number": 320,
+            "type": "pre",
+            "description": ""
+        }
+    ],
+    "courses_requisites1": [
+        {
+            "requisite_id": 1,
+            "course_number": 107,
+            "requisite_number": 103,
+            "is_primary": 1
+        },
+        {
+            "requisite_id": 2,
+            "course_number": 210,
+            "requisite_number": 107,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 2,
+            "course_number": 210,
+            "requisite_number": 110,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 3,
+            "course_number": 213,
+            "requisite_number": 210,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 3,
+            "course_number": 213,
+            "requisite_number": 221,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 4,
+            "course_number": 221,
+            "requisite_number": 121,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 4,
+            "course_number": 221,
+            "requisite_number": 221,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 5,
+            "course_number": 310,
+            "requisite_number": 213,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 5,
+            "course_number": 310,
+            "requisite_number": 221,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 6,
+            "course_number": 313,
+            "requisite_number": 213,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 6,
+            "course_number": 313,
+            "requisite_number": 221,
+            "is_primary": 0
+        },
+        {
+            "requisite_id": 7,
+            "course_number": 320,
+            "requisite_number": 221,
+            "is_primary": 1
+        }
+    ]
+}
